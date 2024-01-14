@@ -1,3 +1,9 @@
+# Fork of [https://github.com/cascadium/OpenMAMA-zmq](https://github.com/cascadium/OpenMAMA-zmq)
+I created this fork as a test of moving an openmama bridge build to vcpkg.  I had originally tried with the OZ fork, 
+but there were a lot of modifications that would not build on windows and linux.  After some experimentation with this build
+I'll see if they are open to a PR to address the cross platform issues.
+* Migrated Build system to use [vcpkg](https://vcpkg.io/)
+
 # This Repository is No Longer Maintained
 
 There is a fork of this project now actively maintained at [https://github.com/nyfix/OZ](https://github.com/nyfix/OZ). Please refer to that repository for future releases. This repository remains only for reference.

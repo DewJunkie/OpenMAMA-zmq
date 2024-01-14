@@ -32,7 +32,6 @@
 
 #include <wombat/wSemaphore.h>
 #include <wombat/wtable.h>
-#include <list.h>
 #include <wombat/queue.h>
 #include <wombat/mempool.h>
 #include <mama/integration/endpointpool.h>

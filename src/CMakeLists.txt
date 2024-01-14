@@ -1,27 +1,4 @@
-include_directories(.)
-include_directories(${MAMA_ROOT}/include)
-include_directories(${EVENT_ROOT}/include)
-include_directories(${ZMQ_ROOT}/include)
-
-link_directories(${MAMA_ROOT}/lib)
-link_directories(${MAMA_ROOT}/lib/dynamic)
-link_directories(${MAMA_ROOT}/lib/dynamic-debug)
-link_directories(${ZMQ_ROOT}/lib)
-link_directories(${EVENT_ROOT}/lib)
-
-add_definitions(-DBRIDGE -DMAMA_DLL -DOPENMAMA_INTEGRATION)
-
-if(WIN32)
-    if (CMAKE_BUILD_TYPE MATCHES "Debug")
-        set(MAMA_LIB_SUFFIX "mdd")
-    else()
-        set(MAMA_LIB_SUFFIX "md")
-    endif()
-else()
-    set(MAMA_LIB_SUFFIX "")
-endif()
-
-add_library(mamazmqimpl${MAMA_LIB_SUFFIX}
+add_library(mamazmqimpl
             MODULE bridge.c
                    msg.c
                    msg.h
@@ -33,34 +10,37 @@ add_library(mamazmqimpl${MAMA_LIB_SUFFIX}
                    zmqbridgefunctions.h
                    zmqdefs.h)
 
-if(WIN32)
-    target_link_libraries(mamazmqimpl${MAMA_LIB_SUFFIX}
-                          libwombatcommon${MAMA_LIB_SUFFIX}
-                          libmamac${MAMA_LIB_SUFFIX}
-                          libzmq-v120-mt-4_0_4
-                          event
-                          uuid
-                          Ws2_32)
+target_compile_definitions(mamazmqimpl PRIVATE
+    BRIDGE MAMA_DLL OPENMAMA_INTEGRATION
+)
 
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    set_target_properties(mamazmqimpl${MAMA_LIB_SUFFIX} PROPERTIES PREFIX "lib")
+target_link_libraries(mamazmqimpl PRIVATE 
+    libzmq 
+    OpenMAMA::mama
+    OpenMAMA::mamabaseimpl
+)
+
+if(WIN32)
+    target_compile_definitions(mamazmqimpl
+        PRIVATE
+        _CRT_SECURE_NO_WARNINGS
+    )
+    if (CMAKE_BUILD_TYPE MATCHES "Debug")
+        set(MAMA_LIB_SUFFIX "mdd")
+    else()
+        set(MAMA_LIB_SUFFIX "md")
+    endif()
+    set_target_properties(mamazmqimpl PROPERTIES PREFIX "lib" SUFFIX "${MAMA_LIB_SUFFIX}.dll")
 
     # Windows Targets
-    install(TARGETS mamazmqimpl${MAMA_LIB_SUFFIX}
+    install(TARGETS mamazmqimpl
             CONFIGURATIONS Release
             DESTINATION bin/dynamic)
-    install(TARGETS mamazmqimpl${MAMA_LIB_SUFFIX}
+    install(TARGETS mamazmqimpl
             CONFIGURATIONS Debug
             DESTINATION bin/dynamic-debug)
 elseif(UNIX)
-    target_link_libraries(mamazmqimpl${MAMA_LIB_SUFFIX}
-                          mamabaseimpl${MAMA_LIB_SUFFIX}
-                          wombatcommon
-                          mama
-                          zmq
-                          uuid
-                          event)
-    install(TARGETS mamazmqimpl${MAMA_LIB_SUFFIX} DESTINATION lib)
+    install(TARGETS mamazmqimpl DESTINATION lib)
 endif()
 
 # Default to installing directly to MAMA directory unless provided already

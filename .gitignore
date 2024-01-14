@@ -42,3 +42,4 @@ nail
 config.log
 build/
 .sconf_temp/
+/.vs

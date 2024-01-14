@@ -28,7 +28,7 @@
 
 #include <stdint.h>
 #include <mama/mama.h>
-#include <timers.h>
+#include <wombat\timers.h>
 #include "zmqbridgefunctions.h"
 #include <mama/integration/mama.h>
 #include <mama/integration/bridge.h>

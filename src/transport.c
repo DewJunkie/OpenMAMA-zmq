@@ -33,7 +33,7 @@
 #include <mama/integration/msg.h>
 #include <mama/integration/subscription.h>
 #include <mama/integration/transport.h>
-#include <timers.h>
+#include <wombat/timers.h>
 #include <stdio.h>
 #include <errno.h>
 #include <wombat/queue.h>

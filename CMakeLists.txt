@@ -1,5 +1,8 @@
-cmake_minimum_required (VERSION 2.8.7)
+cmake_minimum_required (VERSION 3.19)
 project (OpenMAMA-zmq)
+
+find_package(OpenMAMA CONFIG REQUIRED)
+find_package(ZeroMQ CONFIG REQUIRED)
 
 if(UNIX)
     if(MAMA_ROOT)
