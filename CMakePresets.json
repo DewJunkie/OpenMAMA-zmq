@@ -4,8 +4,8 @@
     {
       "name": "common",
       "hidden": true,
-      "binaryDir": "${sourceDir}/out/build",
-      "installDir": "${sourceDir}/out/install",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
       }
